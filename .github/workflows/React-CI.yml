@@ -1,0 +1,28 @@
+name: CI Script
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Node V-${{ matrix.node-version }} Test
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    
+    - name: Install dependencies
+      run: npm install
+      
+    - name: App Test
+      run: npm test
+
+    - name: App Build
+      run: npm run build
