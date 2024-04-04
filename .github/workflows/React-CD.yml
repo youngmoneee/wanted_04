@@ -1,0 +1,40 @@
+name: CD Script
+
+on:
+  push:
+    branches: ["release"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Cache
+      uses: actions/cache@v4
+      id: dep-cache
+      with:
+        path: node_modules
+        key: ${{ runner.OS }}-npm-${{ hashFiles('**/package-lock.json') }}
+    
+    - name: Install dependencies
+      if: steps.dep-cache.outputs.cache-hit != 'true'
+      run: npm install
+      
+    - name: App Test
+      run: npm test
+
+    - name: App Build
+      run: npm run build
+
+    - name: App Deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.S3_WRITER }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_WRITER_PW }}
+      run: |
+        aws s3 sync \
+          --recursive
+          --region ap-northeast-2 \
+          build s3://react.ymon.io \
+          --delete
