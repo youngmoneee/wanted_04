@@ -1,13 +1,11 @@
 import React from 'react';
 import Header from './Header';
-import MainPosting from './MainPosting';
+import Postings from './Postings';
 
-function Main() {
-  return (
-    <div>
-      <Header />
-      <MainPosting />
-    </div>
-  );
-}
+const Main = () => (
+  <div>
+    <Header />
+    <Postings />
+  </div>
+);
 export default Main;

@@ -25,5 +25,15 @@ module.exports = {
     },
   },
   rules: {
+    'arrow-body-style': ['error', 'as-needed'],
+    'prefer-arrow-callback': 'error',
+    'func-style': ['error', 'expression', { allowArrowFunctions: true }],
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
+    ],
   },
 };
