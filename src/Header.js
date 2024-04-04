@@ -1,1 +1,0 @@
-const Header = () => <div> hi </div>;
