@@ -1,0 +1,1 @@
+const MainPosting = () => <div>Main Posting</div>
